@@ -1,4 +1,4 @@
-source = r"E:\studenten\2021eyeprosthesis\3Deyeprosthesis\DICOM\21101811\28110000"
+source = r"E:\studenten\2021eyeprosthesis\3Deyeprosthesis\DICOM\21101811\28110000"        # Source aanpassen naar wens, map met DICOMs
 dicoms = mimics.file.import_dicom_images(source_folder=source)
 
 #Mask creëeren                                                                            ###################### Huidmask
@@ -73,19 +73,10 @@ m = mimics.segment.boolean_operations(mask_a=m1, mask_b=m2, operation="Unite")
 partHuidSpier = mimics.segment.calculate_part(m)
 partHuidSpier.name = "HuidSpier"
 
-
-#mimics.analyze.create_sphere_fit_to_surface(part = part)
-#mimics.analyze.create_sphere_fit_to_surface(part = partHuid)
-#mimics.analyze.create_sphere_fit_to_surface(part = partSpier)
-
+# Sphere aanduiden
 t = "Indicate sphere"
 sph = mimics.analyze.indicate_sphere(title=t, message='Please indicate four points that will define sphere.', show_message_box=True,confirm=True)
 sph.name = "Oogbol"
-
-#center: [28.813646, -23.185680, 10.416167]
-#radius: 12.7359
-#sphere -> mask ->part
-
 
 ### Schedel                                                                            ######################### Schedelmask
 

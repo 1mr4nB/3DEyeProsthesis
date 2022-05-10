@@ -16,9 +16,8 @@ if not in_3matic:
     
     ############################# Our mimics code    
     
-    source = r"E:\studenten\2021eyeprosthesis\3Deyeprosthesis\DICOM\21101811\28110001"    # Check scan 03, 
+    source = r"E:\studenten\2021eyeprosthesis\3Deyeprosthesis\DICOM\21101811\28110001"  # Source aanpassen naar gewenste map met DICOMs
     dicoms = mimics.file.import_dicom_images(source_folder=source)
-
 
     mask = mimics.segment.create_mask()
     mask.name = "Oogleegte"
@@ -31,31 +30,18 @@ if not in_3matic:
 
     #Thresholding
     mimics.segment.threshold(mask=mask, threshold_min=GV_min, threshold_max=GV_max)
-
-
-    #originvect = [-47.5,-31.5,-3]
-    
-    #xvect = [30,0,0]
-    #yvect = [0,20,0]
-    #zvect = [0,0,25]
-
-
-    #boundingbox = mimics.BoundingBox3d(origin=originvect,first_vector=xvect,second_vector=yvect,third_vector=zvect)
-    #mimics.segment.crop_mask(mask,bounding_box=boundingbox)
     
     msg = "Snijd de mask bij via SEGMENT > Crop Mask > Draw"
     mimics.dialogs.message_box(msg,ui_blocking=False)
 
 
     #Calculate part
-
     part = mimics.segment.calculate_part(mask=mask, quality='High')
     part.name = 'oogholte'
     
     ################################ Our mimics code    
-        
-    #mimics.file.export_part(object_to_convert=part, file_name=r"E:\studenten\oogholte_part.stl")
-
+    
+    ################################ Exporteren naar 3-matic
 
     #Export in 3matic
     root_path_of_script = os.path.split(os.path.abspath(__file__))[0]
@@ -82,16 +68,7 @@ else:
     f = sys.argv[2]
     trimatic.import_part_stl(path_of_stl)
     
-    #part = trimatic.find_parts(part.name)
-    #if part:
-    #    plane = trimatic.create_plane_fit(part[0])
-    #    cut_parts = trimatic.cut(part[0], plane)
-    #    exp = trimatic.export_stl_ascii(cut_parts, os.path.split(os.path.abspath(__file__))[0])
-    #    with open(f, "a") as f:
-    #        f.write(exp[0] + "\n")
-    #        f.write(exp[1])
-    #
-    #        print("To continue please close 3-matic!")
+    ###################### Geëxporteerd naar 3-matic
     
     ###################### Here comes our 3-matic code (see other file)
     
@@ -141,14 +118,6 @@ else:
     trimatic.smooth(oogholte)
     trimatic.smooth(oogholte)
 
-    
-
-    #surface[0].name = "achterzijde"
-    
-    #trimatic.smooth(Oogleegte_object)
-    #trimatic.smooth(Oogleegte_object)
-
-
     Oogleegte_object.visible = False
     
     
@@ -156,8 +125,3 @@ else:
     filename = r"E:\studenten\P&O BMT\Intact oog Mimics File\Oogholte.mxp"
 
     trimatic.save_project(filename)
-    
-    
-    ######################s
-
-
